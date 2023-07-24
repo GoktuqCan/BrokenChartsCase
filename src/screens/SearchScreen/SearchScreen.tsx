@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import SearchHeader from './components/SearchHeader';
+import SearchList from './components/SearchList';
 
 export default function SearchScreen() {
   return (
-    <View>
-      <Text>SearchScreen</Text>
-    </View>
+    <>
+      <SearchHeader />
+      <SearchList />
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import { HomeState } from './home/reducer';
+import { SearchState } from './search/reducer';
 
 export type DispatchedAction<T = any> = {
   type: string;
@@ -10,6 +11,7 @@ export type ReduceFunction<T> = (
 ) => T;
 export type RootState = {
   home: HomeState;
+  search: SearchState;
 };
 
 export type Loadable<T = never> = {

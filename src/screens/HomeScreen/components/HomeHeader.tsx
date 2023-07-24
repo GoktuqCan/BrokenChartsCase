@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from 'styles/colors';
 import Profile from 'assets/images/Profile.png';
 import TypeSlider from './TypeSlider';
+import HeaderTitle from 'components/HeaderTitle';
 
 const HomeHeader = () => {
   const { top } = useSafeAreaInsets();
@@ -11,7 +12,7 @@ const HomeHeader = () => {
   return (
     <View style={[styles.container, { paddingTop: top }]}>
       <View style={styles.titleContainer}>
-        <Text>Bored API</Text>
+        <HeaderTitle>Bored API</HeaderTitle>
         <Image source={Profile} style={styles.image} />
       </View>
       <TypeSlider />
