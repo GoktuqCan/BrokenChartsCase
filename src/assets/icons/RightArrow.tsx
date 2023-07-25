@@ -11,7 +11,7 @@ const RightArrow = (props: SvgProps) => (
   >
     <Path
       d="M2 0L8 6L2 12L0.935 10.935L5.87 6L0.935 1.065L2 0Z"
-      fill="#999A9C"
+      fill={props.color || '#999A9C'}
     />
   </Svg>
 );

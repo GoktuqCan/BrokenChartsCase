@@ -13,6 +13,7 @@ import Music from 'assets/icons/search/Music';
 import Book from 'assets/icons/search/Book';
 import Heart from 'assets/icons/search/Heart';
 import SearchItem, { SearchItemType } from './SearchItem';
+import { useNavigation } from '@react-navigation/native';
 
 const Icons = [
   Plate,
@@ -35,6 +36,7 @@ const SearchList = () => {
     searchTerm: search.searchTerm,
     data: search.data,
   }));
+  const navigation = useNavigation();
 
   const filteredData = useMemo(() => {
     return data.reduce((prevArr: Activity[], item: Activity, index: number) => {
@@ -47,8 +49,17 @@ const SearchList = () => {
     }, []);
   }, [data, searchTerm]);
 
+  const onItemSelect = useCallback(
+    (item: Activity) => {
+      navigation.navigate('Chat', {
+        activity: item.activity,
+      });
+    },
+    [navigation],
+  );
+
   const renderItem = useCallback(({ item }: { item: SearchItemType }) => {
-    return <SearchItem item={item} />;
+    return <SearchItem item={item} onSelect={onItemSelect} />;
   }, []);
 
   return (

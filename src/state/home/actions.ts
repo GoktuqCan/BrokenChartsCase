@@ -23,7 +23,12 @@ export const findActivity =
             : {}),
         },
       });
-      dispatch({ type: FIND_ACTIVITY.SUCCESS, payload: response.data });
+      const { data } = response;
+      if (data.error) {
+        dispatch({ type: FIND_ACTIVITY.FAIL, payload: data.error });
+      } else {
+        dispatch({ type: FIND_ACTIVITY.SUCCESS, payload: data });
+      }
     } catch (error) {
       dispatch({ type: FIND_ACTIVITY.FAIL, payload: error });
     }

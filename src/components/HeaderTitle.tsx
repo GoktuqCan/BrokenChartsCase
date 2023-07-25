@@ -1,19 +1,19 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, TextStyle } from 'react-native';
 
 type Props = {
   children: string;
+  style?: TextStyle;
 };
 
-const HeaderTitle: React.FC<Props> = ({ children }) => {
-  return <Text style={styles.title}>{children}</Text>;
+const HeaderTitle: React.FC<Props> = ({ children, style }) => {
+  return <Text style={[styles.title, style]}>{children}</Text>;
 };
 
 export default HeaderTitle;
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 8,
     lineHeight: 36,
     fontWeight: '700',
     fontSize: 24,

@@ -8,4 +8,5 @@ export const colors = {
   white: 'rgba(255, 255, 255, 1)',
   sliderBlue: 'rgba(0, 152, 253, 1)',
   sliderGrey: 'rgba(0, 0, 0, 0.2)',
+  grey: 'rgba(142, 142, 147, 1)',
 };

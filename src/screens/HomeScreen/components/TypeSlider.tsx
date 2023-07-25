@@ -32,7 +32,9 @@ const TypeItem: React.FC<ItemProps> = ({
       ]}
       onPress={onPress}
     >
-      <Text style={[isSelected ? styles.selectedItemText : null]}>{item}</Text>
+      <Text style={[styles.text, isSelected ? styles.selectedItemText : null]}>
+        {item}
+      </Text>
     </Pressable>
   );
 };
@@ -100,6 +102,11 @@ const styles = StyleSheet.create({
   },
   nextItem: {
     marginLeft: 10,
+  },
+  text: {
+    lineHeight: 22.5,
+    fontSize: 15,
+    fontWeight: '500',
   },
 });
 

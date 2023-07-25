@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import Slider, { SliderProps } from '@react-native-community/slider';
 import { colors } from 'styles/colors';
 
@@ -13,7 +13,7 @@ const HomeSlider: React.FC<Props & SliderProps> = ({
 }) => {
   return (
     <>
-      <Text>{label}</Text>
+      <Text style={styles.text}>{label}</Text>
       <Slider
         {...restOfProps}
         minimumTrackTintColor={colors.sliderBlue}
@@ -22,5 +22,13 @@ const HomeSlider: React.FC<Props & SliderProps> = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    lineHeight: 22,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+});
 
 export default HomeSlider;

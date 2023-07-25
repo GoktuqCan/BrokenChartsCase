@@ -1,32 +1,26 @@
 import { DispatchedAction } from 'state/types';
-import { FIND_ACTIVITY, SELECT_TYPE } from './actionTypes';
-import { Activity } from './types';
-import { ACTIVITY_TYPES } from 'state/constants';
+import { GET_COMPLETION } from './activityTypes';
 
-export type HomeState = {
+export type ChatState = {
   loading: boolean;
-  data: Activity | null;
+  data: string | null;
   error: string | null;
-  activityType: string;
 };
 
 const initialState = {
   loading: false,
-  data: null,
+  data: '',
   error: null,
-  activityType: ACTIVITY_TYPES.all,
 };
 
 export default (state = initialState, { type, payload }: DispatchedAction) => {
   switch (type) {
-    case FIND_ACTIVITY.REQUEST:
+    case GET_COMPLETION.REQUEST:
       return { ...state, loading: true };
-    case FIND_ACTIVITY.SUCCESS:
+    case GET_COMPLETION.SUCCESS:
       return { ...state, loading: false, data: payload, error: null };
-    case FIND_ACTIVITY.FAIL:
+    case GET_COMPLETION.FAIL:
       return { ...state, loading: false, error: payload, data: null };
-    case SELECT_TYPE:
-      return { ...state, activityType: payload };
     default:
       return state;
   }

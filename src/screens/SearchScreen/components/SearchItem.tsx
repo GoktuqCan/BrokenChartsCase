@@ -1,31 +1,30 @@
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import RightArrow from 'assets/icons/RightArrow';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { ACTIVITY_TYPES } from 'state/constants';
 import { Activity } from 'state/home/types';
 import { colors } from 'styles/colors';
+import { getActivityDescription } from 'utils/StringUtils';
 
 export type SearchItemType = Activity & { icon: any };
 
 export type SearchItemProps = {
   item: SearchItemType;
+  onSelect: (activity: Activity) => void;
 };
 
-const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
-  const subText = useMemo(() => {
-    return `${(ACTIVITY_TYPES as any)[item.type]} • ${
-      item.participants
-    } Person • ${item.price > 0.5 ? 'Expensive' : 'Cheap'}`;
-  }, [item.participants, item.price, item.type]);
+const SearchItem: React.FC<SearchItemProps> = ({ item, onSelect }) => {
+  const onPress = useCallback(() => {
+    onSelect(item);
+  }, [item, onSelect]);
 
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <View style={styles.iconContainer}>
         <item.icon />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.name}>{item.activity}</Text>
-        <Text style={styles.subText}>{subText}</Text>
+        <Text style={styles.subText}>{getActivityDescription(item)}</Text>
       </View>
       <RightArrow style={styles.rightArrow} />
     </Pressable>

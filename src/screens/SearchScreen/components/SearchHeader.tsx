@@ -10,7 +10,7 @@ const SearchHeader = () => {
 
   return (
     <View style={[styles.container, { paddingTop: top }]}>
-      <HeaderTitle>Search</HeaderTitle>
+      <HeaderTitle style={styles.title}>Search</HeaderTitle>
       <SearchInput />
     </View>
   );
@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.bgSeparator,
     paddingHorizontal: 16,
+  },
+  title: {
+    marginTop: 8,
   },
 });
 

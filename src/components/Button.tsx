@@ -6,6 +6,7 @@ import {
   StyleProp,
   ViewStyle,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import { colors } from 'styles/colors';
 
@@ -15,16 +16,39 @@ type Props = {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   dark?: boolean;
+  loading?: boolean;
 };
 
-const Button: React.FC<Props> = ({ onPress, label, leftIcon, style, dark }) => {
+const Button: React.FC<Props> = ({
+  onPress,
+  label,
+  leftIcon,
+  style,
+  dark,
+  loading,
+}) => {
   return (
     <Pressable
-      style={[styles.container, dark ? styles.dark : null, style]}
+      style={[
+        styles.container,
+        dark ? styles.dark : null,
+        loading ? styles.loadingContainer : null,
+        style,
+      ]}
       onPress={onPress}
+      disabled={loading}
     >
-      {leftIcon ? <View style={styles.iconContainer}>{leftIcon}</View> : null}
-      <Text style={styles[dark ? 'whiteText' : 'blackText']}>{label}</Text>
+      {loading ? (
+        <ActivityIndicator
+          color={colors.white}
+          style={styles.loadingIndicator}
+        />
+      ) : leftIcon ? (
+        <View style={styles.iconContainer}>{leftIcon}</View>
+      ) : null}
+      <Text style={[styles.text, styles[dark ? 'whiteText' : 'blackText']]}>
+        {label}
+      </Text>
     </Pressable>
   );
 };
@@ -43,6 +67,10 @@ const styles = StyleSheet.create({
   },
   dark: {
     backgroundColor: colors.black,
+    borderColor: 'transparent',
+  },
+  loadingContainer: {
+    backgroundColor: colors.textSecondary,
   },
   whiteText: {
     color: colors.bgPrimary,
@@ -52,5 +80,13 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginRight: 8,
+  },
+  loadingIndicator: {
+    marginRight: 8,
+  },
+  text: {
+    lineHeight: 24,
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

@@ -3,7 +3,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabs from './BottomTabs';
 import ChatScreen from 'screens/ChatScreen/ChatScreen';
 
-const Stack = createNativeStackNavigator();
+export type AppStackParamList = {
+  BottomTabs: undefined;
+  Chat: { activity: string };
+};
+
+const Stack = createNativeStackNavigator<AppStackParamList>();
 
 export default function AppStack() {
   return (

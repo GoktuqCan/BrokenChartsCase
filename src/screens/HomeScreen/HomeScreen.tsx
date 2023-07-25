@@ -5,8 +5,13 @@ import HomeHeader from './components/HomeHeader';
 import HomeSlider from './components/HomeSlider';
 import Button from 'components/Button';
 import Random from 'assets/icons/Random';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { findActivity } from 'state/home/actions';
+import HistoryItem from 'components/HistoryItem';
+import Search from 'assets/icons/Search';
+import { RootState } from 'state/types';
+import NotFound from 'assets/icons/NotFound';
+import { getActivityDescription } from 'utils/StringUtils';
 
 // Aimed for scalable approach. New fields can be added by just adding new entries to this object
 const FIELDS = {
@@ -21,6 +26,11 @@ export type Fields = {
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
+  const { loading, data, error } = useSelector(({ home }: RootState) => ({
+    loading: home.loading,
+    data: home.data,
+    error: home.error,
+  }));
   const [fields, setFields] = useState<Fields>(
     Object.entries(FIELDS).reduce((prevValue, [key, value]) => {
       return { ...prevValue, [key]: value.min };
@@ -62,11 +72,45 @@ const HomeScreen = () => {
   const findActivityPress = useCallback(() => {
     dispatch(findActivity(fields));
   }, [dispatch, fields]);
+  const topItem = useMemo(
+    () => ({
+      title: error
+        ? 'No activity found'
+        : data
+        ? data.activity
+        : loading
+        ? 'Loading...'
+        : 'Stop being bored!',
+      description: error
+        ? 'Please change parameters and retry!'
+        : data
+        ? getActivityDescription(data)
+        : loading
+        ? 'Searching for activities'
+        : 'Configure parameters to find activities.',
+    }),
+    [data, error, loading],
+  );
 
   return (
     <>
       <HomeHeader />
       <View style={styles.wrapper}>
+        <HistoryItem
+          title={topItem.title}
+          description={topItem.description}
+          leftIcon={
+            error ? (
+              <NotFound />
+            ) : (
+              <Search width={28} height={28} color={colors.textPrimary} />
+            )
+          }
+          onPress={() => {}}
+          style={styles.historyItem}
+          disabled={!data}
+          loading={loading}
+        />
         {sliders}
         <Button
           label="Randomize Values"
@@ -79,6 +123,7 @@ const HomeScreen = () => {
           label="Find Activity"
           style={styles.findButton}
           onPress={findActivityPress}
+          loading={loading}
         />
       </View>
     </>
@@ -99,5 +144,8 @@ const styles = StyleSheet.create({
   },
   findButton: {
     marginTop: 8,
+  },
+  historyItem: {
+    marginBottom: 24,
   },
 });
