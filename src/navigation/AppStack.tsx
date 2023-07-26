@@ -1,11 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabs from './BottomTabs';
-import ChatScreen from 'screens/ChatScreen/ChatScreen';
+import ChatScreen, { ChatActivity } from 'screens/ChatScreen/ChatScreen';
 
 export type AppStackParamList = {
   BottomTabs: undefined;
-  Chat: { activity: string };
+  Chat: { activity: ChatActivity };
 };
 
 const Stack = createNativeStackNavigator<AppStackParamList>();

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { colors } from 'styles/colors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Activity } from 'state/home/types';
 import Plate from 'assets/icons/search/Plate';
 import Message from 'assets/icons/search/Message';
@@ -14,6 +14,7 @@ import Book from 'assets/icons/search/Book';
 import Heart from 'assets/icons/search/Heart';
 import SearchItem, { SearchItemType } from './SearchItem';
 import { useNavigation } from '@react-navigation/native';
+import { addToHistory } from 'state/history/actions';
 
 const Icons = [
   Plate,
@@ -37,7 +38,7 @@ const SearchList = () => {
     data: search.data,
   }));
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   const filteredData = useMemo(() => {
     return data.reduce((prevArr: Activity[], item: Activity, index: number) => {
       if (
@@ -52,15 +53,18 @@ const SearchList = () => {
   const onItemSelect = useCallback(
     (item: Activity) => {
       navigation.navigate('Chat', {
-        activity: item.activity,
+        activity: item,
       });
     },
-    [navigation],
+    [dispatch, navigation],
   );
 
-  const renderItem = useCallback(({ item }: { item: SearchItemType }) => {
-    return <SearchItem item={item} onSelect={onItemSelect} />;
-  }, []);
+  const renderItem = useCallback(
+    ({ item }: { item: SearchItemType }) => {
+      return <SearchItem item={item} onSelect={onItemSelect} />;
+    },
+    [onItemSelect],
+  );
 
   return (
     <FlatList

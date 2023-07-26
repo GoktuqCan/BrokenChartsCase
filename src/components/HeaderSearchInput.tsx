@@ -11,30 +11,27 @@ import { colors } from 'styles/colors';
 import useKeyboardShow from 'hooks/useKeyboardShow';
 import Clear from 'assets/icons/Clear';
 import Search from 'assets/icons/Search';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSearchTerm } from 'state/search/actions';
-import { RootState } from 'state/types';
 
-const SearchInput = () => {
-  const { searchTerm } = useSelector(({ search }: RootState) => ({
-    searchTerm: search.searchTerm,
-  }));
-  const dispatch = useDispatch();
+type Props = {
+  searchTerm: string;
+  onChangeText: (text: string) => void;
+  onClear: () => void;
+};
+
+const HeaderSearchInput: React.FC<Props> = ({
+  onClear,
+  searchTerm,
+  onChangeText,
+}) => {
   const isKeyboardShow = useKeyboardShow();
   const [isFocused, setIsFocused] = useState(false);
   const onCancelPress = useCallback(() => {
     Keyboard.dismiss();
   }, []);
   const onClearPress = useCallback(() => {
-    dispatch(setSearchTerm(''));
+    onClear();
     Keyboard.dismiss();
-  }, [dispatch]);
-  const onChangeText = useCallback(
-    (value: string) => {
-      dispatch(setSearchTerm(value));
-    },
-    [dispatch],
-  );
+  }, [onClear]);
   const onFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
@@ -81,6 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 12,
     marginBottom: 8,
+    backgroundColor: colors.bgPrimary,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -107,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchInput;
+export default HeaderSearchInput;

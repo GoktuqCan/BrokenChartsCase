@@ -8,8 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'state/types';
 import ChatList from './components/ChatList';
 import { colors } from 'styles/colors';
+import { addToHistory } from 'state/history/actions';
+import usePrevious from 'hooks/usePrevious';
+import { Activity } from 'state/home/types';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Chat'>;
+
+export type ChatActivity = Activity & { reply?: string };
 
 const ChatScreen: React.FC<Props> = ({ route }) => {
   const { activity } = route.params;
@@ -18,20 +23,30 @@ const ChatScreen: React.FC<Props> = ({ route }) => {
     loading: chat.loading,
     data: chat.data,
   }));
+  const prevLoading = usePrevious(loading);
+  const reply = useMemo(() => activity.reply || data, [activity.reply, data]);
 
   useEffect(() => {
-    dispatch(getCompletion(activity));
+    if (!activity.reply) {
+      dispatch(getCompletion(activity.activity));
+    }
   }, [activity, dispatch]);
 
+  useEffect(() => {
+    if (prevLoading && !loading) {
+      dispatch(addToHistory(activity, data));
+    }
+  }, [activity, data, dispatch, loading, prevLoading]);
+
   const listData = useMemo(() => {
-    const mergedData: string[] = [activity];
+    const mergedData: string[] = [activity.activity];
     if (loading) {
       mergedData.push('Thinking...');
-    } else if (data) {
-      mergedData.push(data);
+    } else if (reply) {
+      mergedData.push(reply);
     }
     return mergedData;
-  }, [activity, data, loading]);
+  }, [activity.activity, loading, reply]);
 
   return (
     <View style={styles.wrapper}>
