@@ -14,7 +14,6 @@ import Book from 'assets/icons/search/Book';
 import Heart from 'assets/icons/search/Heart';
 import SearchItem, { SearchItemType } from './SearchItem';
 import { useNavigation } from '@react-navigation/native';
-import { addToHistory } from 'state/history/actions';
 
 const Icons = [
   Plate,
