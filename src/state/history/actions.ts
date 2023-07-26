@@ -16,14 +16,19 @@ export const addToHistory =
   (item: Activity, reply: string) =>
   (dispatch: Dispatch, getState: () => RootState) => {
     const { data } = getState().history;
+    const foundIndex = data.findIndex(listItem => listItem.key === item.key);
+    const newData = [...data];
+    if (foundIndex !== -1) {
+      newData.splice(foundIndex, 1);
+    }
     dispatch({
       type: ADD_TO_HISTORY,
       payload: [
-        ...data,
         {
           ...item,
           reply,
         },
+        ...newData,
       ],
     });
   };

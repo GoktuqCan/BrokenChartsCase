@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TextStyle } from 'react-native';
+import { colors } from 'styles/colors';
 
 type Props = {
   children: string;
@@ -17,5 +18,6 @@ const styles = StyleSheet.create({
     lineHeight: 36,
     fontWeight: '700',
     fontSize: 24,
+    color: colors.textPrimary,
   },
 });

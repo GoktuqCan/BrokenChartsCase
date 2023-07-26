@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, Platform } from 'react-native';
 
 export default function useKeyboardShow() {
   const [isKeyboardShow, setKeyboardShow] = useState(false);
+  const isAndroid = Platform.OS === 'android';
   const onKeyboardDidShow = useCallback(() => {
     setKeyboardShow(true);
   }, []);
@@ -11,18 +12,18 @@ export default function useKeyboardShow() {
   }, []);
   useEffect(() => {
     const showListener = Keyboard.addListener(
-      'keyboardWillShow',
+      `keyboard${isAndroid ? 'Did' : 'Will'}Show`,
       onKeyboardDidShow,
     );
     const hideListener = Keyboard.addListener(
-      'keyboardWillHide',
+      `keyboard${isAndroid ? 'Did' : 'Will'}Hide`,
       onKeyboardDidHide,
     );
     return () => {
       showListener?.remove();
       hideListener?.remove();
     };
-  }, [onKeyboardDidHide, onKeyboardDidShow]);
+  }, [isAndroid, onKeyboardDidHide, onKeyboardDidShow]);
 
   return isKeyboardShow;
 }

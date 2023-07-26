@@ -8,15 +8,15 @@ export type AppStackParamList = {
   Chat: { activity: ChatActivity };
 };
 
+const screenOptions = {
+  headerShown: false,
+};
+
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 export default function AppStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="BottomTabs" component={BottomTabs} />
       <Stack.Screen name="Chat" component={ChatScreen} />
     </Stack.Navigator>

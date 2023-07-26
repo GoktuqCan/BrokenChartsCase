@@ -88,5 +88,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontSize: 16,
     fontWeight: '600',
+    color: colors.textPrimary,
   },
 });

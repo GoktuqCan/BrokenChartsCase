@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     fontSize: 16,
     fontWeight: '500',
+    color: colors.textPrimary,
   },
 });
 

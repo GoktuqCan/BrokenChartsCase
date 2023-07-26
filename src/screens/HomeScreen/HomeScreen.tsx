@@ -12,6 +12,7 @@ import Search from 'assets/icons/Search';
 import { RootState } from 'state/types';
 import NotFound from 'assets/icons/NotFound';
 import { getActivityDescription } from 'utils/StringUtils';
+import { useNavigation } from '@react-navigation/native';
 
 // Aimed for scalable approach. New fields can be added by just adding new entries to this object
 const FIELDS = {
@@ -26,6 +27,7 @@ export type Fields = {
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const { loading, data, error } = useSelector(({ home }: RootState) => ({
     loading: home.loading,
     data: home.data,
@@ -40,7 +42,9 @@ const HomeScreen = () => {
   const sliders = useMemo(() => {
     return Object.entries(FIELDS).map(([key, value]) => (
       <HomeSlider
-        label={`${value.label}: ${fields[key].toFixed(value.fragment)}`}
+        label={`${value.label}: ${(fields as any)[key].toFixed(
+          value.fragment,
+        )}`}
         minimumValue={value.min}
         maximumValue={value.max}
         step={Math.pow(10, -value.fragment)}
@@ -91,6 +95,11 @@ const HomeScreen = () => {
     }),
     [data, error, loading],
   );
+  const onItemPress = useCallback(() => {
+    navigation.navigate('Chat', {
+      activity: data,
+    });
+  }, [data, navigation]);
 
   return (
     <>
@@ -106,7 +115,7 @@ const HomeScreen = () => {
               <Search width={28} height={28} color={colors.textPrimary} />
             )
           }
-          onPress={() => {}}
+          onPress={onItemPress}
           style={styles.historyItem}
           disabled={!data}
           loading={loading}

@@ -6,7 +6,7 @@ import Trash from 'assets/icons/Trash';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'state/types';
-import { clearHistory, setHistorySearchTerm } from 'state/history/actions';
+import { setHistorySearchTerm } from 'state/history/actions';
 import HeaderSearchInput from 'components/HeaderSearchInput';
 import HistoryClearModal from './HistoryClearModal';
 
@@ -29,6 +29,9 @@ const HistoryHeader = () => {
   const onClearPress = useCallback(() => {
     setModalOpen(true);
   }, []);
+  const onModalClosePress = useCallback(() => {
+    setModalOpen(false);
+  }, []);
 
   return (
     <>
@@ -43,12 +46,10 @@ const HistoryHeader = () => {
           onClear={onSearchClear}
           onChangeText={onChangeText}
           searchTerm={searchTerm}
+          placeholder="Search chat"
         />
       </View>
-      <HistoryClearModal
-        isVisible={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
+      <HistoryClearModal isVisible={modalOpen} onClose={onModalClosePress} />
     </>
   );
 };

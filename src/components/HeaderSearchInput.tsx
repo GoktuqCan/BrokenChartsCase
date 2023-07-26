@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Pressable,
   Keyboard,
+  Platform,
 } from 'react-native';
 import { colors } from 'styles/colors';
 import useKeyboardShow from 'hooks/useKeyboardShow';
@@ -16,12 +17,14 @@ type Props = {
   searchTerm: string;
   onChangeText: (text: string) => void;
   onClear: () => void;
+  placeholder: string;
 };
 
 const HeaderSearchInput: React.FC<Props> = ({
   onClear,
   searchTerm,
   onChangeText,
+  placeholder,
 }) => {
   const isKeyboardShow = useKeyboardShow();
   const [isFocused, setIsFocused] = useState(false);
@@ -50,7 +53,8 @@ const HeaderSearchInput: React.FC<Props> = ({
         <Search color={isFocused || searchTerm ? colors.textPrimary : ''} />
         <TextInput
           style={styles.input}
-          placeholder="Search Activity"
+          placeholder={placeholder}
+          placeholderTextColor={colors.textSecondary}
           onChangeText={onChangeText}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -96,6 +100,12 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginLeft: 8,
+    color: colors.textPrimary,
+    ...Platform.select({
+      android: {
+        marginBottom: -4,
+      },
+    }),
   },
   cancelButton: {
     marginLeft: 8,

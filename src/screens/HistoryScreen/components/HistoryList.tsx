@@ -52,8 +52,6 @@ const HistoryList = () => {
 
   const renderItem = useCallback(
     ({ item }: { item: SearchItemType }) => {
-      console.log(item);
-
       return (
         <HistoryItem
           title={item.activity}

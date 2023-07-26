@@ -19,7 +19,7 @@ export const findActivity =
         params: {
           ...fields,
           ...(activityType !== ACTIVITY_TYPES.all
-            ? { type: activityType }
+            ? { type: activityType.toLocaleLowerCase() }
             : {}),
         },
       });

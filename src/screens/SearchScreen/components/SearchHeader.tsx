@@ -31,6 +31,7 @@ const SearchHeader = () => {
         onClear={onClear}
         onChangeText={onChangeText}
         searchTerm={searchTerm}
+        placeholder="Search activity"
       />
     </View>
   );
