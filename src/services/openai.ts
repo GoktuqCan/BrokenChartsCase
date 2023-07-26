@@ -1,11 +1,12 @@
 import Axios from 'axios';
 import axiosRetry from 'axios-retry';
+import Config from 'react-native-config';
 
 const openai = Axios.create({
   baseURL: 'https://api.openai.com/v1',
   timeout: 10000,
   headers: {
-    Authorization: 'Bearer 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',
+    Authorization: `Bearer ${Config.OPENAI_KEY}`,
   },
 });
 
